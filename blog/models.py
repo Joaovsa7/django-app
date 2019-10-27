@@ -21,3 +21,18 @@ class Postagem(models.Model):
 
     def __str__(self):
         return self.titulo
+
+class Comentario(models.Model):
+    postagem = models.ForeignKey(Postagem, on_delete=models.CASCADE, related_name='comentarios')
+    nome = models.CharField(max_length=200)
+    email = models.EmailField()
+    body = HTMLField()
+    criado_em = models.DateTimeField(auto_now_add=True)
+    ativo = models.BooleanField(default=False)
+    
+    class Meta:
+        ordering = ['criado_em']
+    
+    def __str__(self):
+        return 'Comentário {} por {}'.format(self.body, self.nome)
+    
